@@ -37,6 +37,18 @@ var addressBookMain = /** @class */ (function () {
     addressBookMain.prototype.writeDataToFile = function () {
         utils_1.writeDataToJsonfile(this.nameAddressMap);
     };
+    addressBookMain.prototype.updateDataBasedName = function () {
+        console.log("Enter the name");
+        var userName = parseInt(utils_1.prompt());
+        var selectedUserObj = this.nameAddressMap[userName];
+        var userData = utils_1.readInput();
+        utils_1.updateObject(userData, selectedUserObj['person']);
+    };
+    addressBookMain.prototype.deleteItemBasedOnName = function () {
+        console.log("Enter the name");
+        var userName = parseInt(utils_1.prompt());
+        delete this.nameAddressMap[userName];
+    };
     return addressBookMain;
 }());
 function main() {
@@ -55,6 +67,12 @@ function main() {
                 break;
             case 3:
                 addressBookObj.printItems();
+                break;
+            case 4:
+                addressBookObj.updateDataBasedName();
+                break;
+            case 5:
+                addressBookObj.deleteItemBasedOnName();
                 break;
             default:
                 console.log("Invalid input");

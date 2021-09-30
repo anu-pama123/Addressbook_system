@@ -1,4 +1,4 @@
-import { writeDataToJsonfile, printAddressData,readInput, prompt } from "./utils";
+import { writeDataToJsonfile, printAddressData,readInput,updateObject, prompt } from "./utils";
 
 class Person {
     firstName : string;
@@ -45,6 +45,15 @@ class addressBookMain {
     writeDataToFile(){
         writeDataToJsonfile(this.nameAddressMap);
     }
+
+    public updateDataBasedName(): void;
+    updateDataBasedName(){
+        console.log("Enter the name")
+        let userName = parseInt(prompt());
+        let selectedUserObj = this.nameAddressMap[userName]
+        let userData = readInput();
+        updateObject(userData, selectedUserObj['person'])
+    }
 }
 
 function main() {
@@ -63,6 +72,9 @@ function main() {
                 break;
             case 3:
                 addressBookObj.printItems();
+                break;
+            case 4:
+                addressBookObj.updateDataBasedName();
                 break;
             default:
                 console.log("Invalid input");

@@ -50,6 +50,17 @@ function readInput(): any {
     };
 }
 
+function updateObject(userData:any, personObj:any) {
+    personObj.firstName = userData["firstName"]
+    personObj.lastName = userData["lastName"]
+    personObj.emailId = userData["emailId"]
+    personObj.phoneNumber = userData["phoneNumber"]
+    personObj.city = userData["city"]
+    personObj.state = userData["state"]
+    personObj.zipCode = userData["zipCode"]
+    console.log("updated!...")
+}
+
 function printAddressData(personObj:any) {
     console.log("firstName : ", personObj.firstName)
     console.log("lastName : ", personObj.lastName)
@@ -61,4 +72,4 @@ function printAddressData(personObj:any) {
     console.log("\n-----------------------------\n")
 }
 
-export {readInput, printAddressData, writeDataToJsonfile, prompt};
+export {readInput, printAddressData, writeDataToJsonfile, updateObject, prompt};

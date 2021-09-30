@@ -48,6 +48,17 @@ function readInput() {
     };
 }
 exports.readInput = readInput;
+function updateObject(userData, personObj) {
+    personObj.firstName = userData["firstName"];
+    personObj.lastName = userData["lastName"];
+    personObj.emailId = userData["emailId"];
+    personObj.phoneNumber = userData["phoneNumber"];
+    personObj.city = userData["city"];
+    personObj.state = userData["state"];
+    personObj.zipCode = userData["zipCode"];
+    console.log("updated!...");
+}
+exports.updateObject = updateObject;
 function printAddressData(personObj) {
     console.log("firstName : ", personObj.firstName);
     console.log("lastName : ", personObj.lastName);
