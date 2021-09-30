@@ -25,6 +25,8 @@ var addressBookMain = /** @class */ (function () {
         };
     };
     addressBookMain.prototype.printItems = function () {
+        console.log('+++++++++++++++');
+        console.log(this.nameAddressMap);
         console.log("\n------------------\n");
         for (var key in this.nameAddressMap) {
             var value = this.nameAddressMap[key];

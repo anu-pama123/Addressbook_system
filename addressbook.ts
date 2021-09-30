@@ -31,6 +31,8 @@ class addressBookMain {
     }
     public printItems(): void;
     printItems(){
+        console.log('+++++++++++++++');
+        console.log(this.nameAddressMap);
         console.log("\n------------------\n")
         for (let key in this.nameAddressMap) {
             let value = this.nameAddressMap[key];

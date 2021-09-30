@@ -18,7 +18,12 @@ function writeDataToJsonfile(nameAddressMap:any) {
             "zipCode":personObj.zipCode,
         });
     }
-    fs.writeFile ("./data.json", JSON.stringify(dataList), function(err) {
+
+    var data = fs.readFileSync('./data.json');
+    var json = JSON.parse(data);
+    json.push(...dataList);
+
+    fs.writeFile ("./data.json", JSON.stringify(json), function(err) {
         if (err) throw err;
         console.log('complete');
         }
