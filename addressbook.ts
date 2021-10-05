@@ -1,4 +1,4 @@
-import { writeDataToJsonfile, printAddressData,readInput,updateObject, prompt } from "./utils";
+import { writeDataToJsonfile, loadDataFromJsonFile, printAddressData,readInput, updateObject, prompt } from "./utils";
 
 class Person {
     firstName : string;
@@ -21,6 +21,9 @@ class Person {
 
 class addressBookMain {
     public nameAddressMap = Object;
+    constructor(){
+        this.nameAddressMap = this.loadDataFromFile()
+    }
     public addNewItem(): void;
     addNewItem() {
         let userData = readInput();
@@ -28,6 +31,8 @@ class addressBookMain {
         this.nameAddressMap[userData["firstName"]] = {
             "person": personObj,
         };
+        console.log('~~~~~~~~~~~')
+        console.log(this.nameAddressMap);
     }
     public printItems(): void;
     printItems(){
@@ -46,12 +51,36 @@ class addressBookMain {
         writeDataToJsonfile(this.nameAddressMap);
     }
 
+    public loadDataFromFile(): any;
+    loadDataFromFile(){
+        let nameAddressMap = Object;
+        let addressBookData = loadDataFromJsonFile();
+        for(var record of addressBookData){
+            let personObj = new Person(record["firstName"], record["lastName"], record["emailId"], record["phoneNumber"], record["city"], record["state"], record["zipCode"]);
+            nameAddressMap[record["firstName"]] = {
+                "person": personObj,
+            };
+        }
+        return nameAddressMap;
+    }
+
+    public deleteItemBasedOnName(): void;
+    deleteItemBasedOnName(){
+        console.log("Enter the name")
+        let userName = prompt();
+        delete this.nameAddressMap[userName];
+        console.log('Deleted !!!')
+    }
+
     public updateDataBasedName(): void;
     updateDataBasedName(){
         console.log("Enter the name")
-        let userName = parseInt(prompt());
+        let userName = prompt();
         let selectedUserObj = this.nameAddressMap[userName]
         let userData = readInput();
+        console.log(userName);
+        console.log(this.nameAddressMap);
+        console.log(selectedUserObj);
         updateObject(userData, selectedUserObj['person'])
     }
 }
@@ -75,6 +104,9 @@ function main() {
                 break;
             case 4:
                 addressBookObj.updateDataBasedName();
+                break;
+            case 5:
+                addressBookObj.deleteItemBasedOnName();
                 break;
             default:
                 console.log("Invalid input");

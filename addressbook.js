@@ -16,6 +16,7 @@ var Person = /** @class */ (function () {
 var addressBookMain = /** @class */ (function () {
     function addressBookMain() {
         this.nameAddressMap = Object;
+        this.nameAddressMap = this.loadDataFromFile();
     }
     addressBookMain.prototype.addNewItem = function () {
         var userData = utils_1.readInput();
@@ -23,6 +24,8 @@ var addressBookMain = /** @class */ (function () {
         this.nameAddressMap[userData["firstName"]] = {
             "person": personObj
         };
+        console.log('~~~~~~~~~~~');
+        console.log(this.nameAddressMap);
     };
     addressBookMain.prototype.printItems = function () {
         console.log('+++++++++++++++');
@@ -37,17 +40,33 @@ var addressBookMain = /** @class */ (function () {
     addressBookMain.prototype.writeDataToFile = function () {
         utils_1.writeDataToJsonfile(this.nameAddressMap);
     };
-    addressBookMain.prototype.updateDataBasedName = function () {
-        console.log("Enter the name");
-        var userName = parseInt(utils_1.prompt());
-        var selectedUserObj = this.nameAddressMap[userName];
-        var userData = utils_1.readInput();
-        utils_1.updateObject(userData, selectedUserObj['person']);
+    addressBookMain.prototype.loadDataFromFile = function () {
+        var nameAddressMap = Object;
+        var addressBookData = utils_1.loadDataFromJsonFile();
+        for (var _i = 0, addressBookData_1 = addressBookData; _i < addressBookData_1.length; _i++) {
+            var record = addressBookData_1[_i];
+            var personObj = new Person(record["firstName"], record["lastName"], record["emailId"], record["phoneNumber"], record["city"], record["state"], record["zipCode"]);
+            nameAddressMap[record["firstName"]] = {
+                "person": personObj
+            };
+        }
+        return nameAddressMap;
     };
     addressBookMain.prototype.deleteItemBasedOnName = function () {
         console.log("Enter the name");
-        var userName = parseInt(utils_1.prompt());
+        var userName = utils_1.prompt();
         delete this.nameAddressMap[userName];
+        console.log('Deleted !!!');
+    };
+    addressBookMain.prototype.updateDataBasedName = function () {
+        console.log("Enter the name");
+        var userName = utils_1.prompt();
+        var selectedUserObj = this.nameAddressMap[userName];
+        var userData = utils_1.readInput();
+        console.log(userName);
+        console.log(this.nameAddressMap);
+        console.log(selectedUserObj);
+        utils_1.updateObject(userData, selectedUserObj['person']);
     };
     return addressBookMain;
 }());

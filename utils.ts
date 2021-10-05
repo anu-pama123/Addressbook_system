@@ -1,5 +1,6 @@
 declare var require: any;
 const ps = require("prompt-sync");
+const addressBookData = require("./data.json");
 const prompt = ps();
 var fs = require('fs');
 
@@ -19,15 +20,19 @@ function writeDataToJsonfile(nameAddressMap:any) {
         });
     }
 
-    var data = fs.readFileSync('./data.json');
-    var json = JSON.parse(data);
-    json.push(...dataList);
+    // var data = fs.readFileSync('./data.json');
+    // var json = JSON.parse(data);
+    // json.push(...dataList);
 
-    fs.writeFile ("./data.json", JSON.stringify(json), function(err) {
+    fs.writeFile ("./data.json", JSON.stringify(dataList), function(err) {
         if (err) throw err;
         console.log('complete');
         }
     );
+}
+
+function loadDataFromJsonFile() {
+    return addressBookData;
 }
 
 function readInput(): any {
@@ -50,17 +55,6 @@ function readInput(): any {
     };
 }
 
-function updateObject(userData:any, personObj:any) {
-    personObj.firstName = userData["firstName"]
-    personObj.lastName = userData["lastName"]
-    personObj.emailId = userData["emailId"]
-    personObj.phoneNumber = userData["phoneNumber"]
-    personObj.city = userData["city"]
-    personObj.state = userData["state"]
-    personObj.zipCode = userData["zipCode"]
-    console.log("updated!...")
-}
-
 function printAddressData(personObj:any) {
     console.log("firstName : ", personObj.firstName)
     console.log("lastName : ", personObj.lastName)
@@ -72,4 +66,15 @@ function printAddressData(personObj:any) {
     console.log("\n-----------------------------\n")
 }
 
-export {readInput, printAddressData, writeDataToJsonfile, updateObject, prompt};
+function updateObject(userData:any, personObj:any) {
+    personObj.firstName = userData["firstName"]
+    personObj.lastName = userData["lastName"]
+    personObj.emailId = userData["emailId"]
+    personObj.phoneNumber = userData["phoneNumber"]
+    personObj.city = userData["city"]
+    personObj.state = userData["state"]
+    personObj.zipCode = userData["zipCode"]
+    console.log("updated!...")
+}
+
+export {readInput, printAddressData, writeDataToJsonfile, loadDataFromJsonFile, updateObject, prompt};

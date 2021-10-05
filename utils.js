@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var ps = require("prompt-sync");
+var addressBookData = require("./data.json");
 var prompt = ps();
 exports.prompt = prompt;
 var fs = require('fs');
@@ -19,16 +20,20 @@ function writeDataToJsonfile(nameAddressMap) {
             "zipCode": personObj.zipCode
         });
     }
-    var data = fs.readFileSync('./data.json');
-    var json = JSON.parse(data);
-    json.push.apply(json, dataList);
-    fs.writeFile("./data.json", JSON.stringify(json), function (err) {
+    // var data = fs.readFileSync('./data.json');
+    // var json = JSON.parse(data);
+    // json.push(...dataList);
+    fs.writeFile("./data.json", JSON.stringify(dataList), function (err) {
         if (err)
             throw err;
         console.log('complete');
     });
 }
 exports.writeDataToJsonfile = writeDataToJsonfile;
+function loadDataFromJsonFile() {
+    return addressBookData;
+}
+exports.loadDataFromJsonFile = loadDataFromJsonFile;
 function readInput() {
     var firstName = prompt("Enter your firstName : ");
     var lastName = prompt("Enter your lastName : ");
@@ -48,17 +53,6 @@ function readInput() {
     };
 }
 exports.readInput = readInput;
-function updateObject(userData, personObj) {
-    personObj.firstName = userData["firstName"];
-    personObj.lastName = userData["lastName"];
-    personObj.emailId = userData["emailId"];
-    personObj.phoneNumber = userData["phoneNumber"];
-    personObj.city = userData["city"];
-    personObj.state = userData["state"];
-    personObj.zipCode = userData["zipCode"];
-    console.log("updated!...");
-}
-exports.updateObject = updateObject;
 function printAddressData(personObj) {
     console.log("firstName : ", personObj.firstName);
     console.log("lastName : ", personObj.lastName);
@@ -70,3 +64,14 @@ function printAddressData(personObj) {
     console.log("\n-----------------------------\n");
 }
 exports.printAddressData = printAddressData;
+function updateObject(userData, personObj) {
+    personObj.firstName = userData["firstName"];
+    personObj.lastName = userData["lastName"];
+    personObj.emailId = userData["emailId"];
+    personObj.phoneNumber = userData["phoneNumber"];
+    personObj.city = userData["city"];
+    personObj.state = userData["state"];
+    personObj.zipCode = userData["zipCode"];
+    console.log("updated!...");
+}
+exports.updateObject = updateObject;
