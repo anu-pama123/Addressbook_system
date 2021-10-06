@@ -80,15 +80,27 @@ class addressBookMain {
         let userData = readInput();
         console.log(userName);
         console.log(this.nameAddressMap);
-        console.log(selectedUserObj);
         updateObject(userData, selectedUserObj['person'])
+    }
+
+    public searchItemBasedOnName(): void;
+    searchItemBasedOnName(){
+        console.log("Enter the name")
+        let userName = prompt();
+        for (let key in this.nameAddressMap) {
+            let value = this.nameAddressMap[key];
+            if(value.person.firstName == userName) {
+                console.log('Found person !!');
+                console.log(value.person);
+            }
+        }
     }
 }
 
 function main() {
     let addressBookObj = new addressBookMain()
     while(1){
-        console.log('Select your choice\n \n1.exit \n2.Add Item\n3.Display Items\n4.Update\n5.Delete\n6.Sort\n\n')
+        console.log('Select your choice\n \n1.exit \n2.Add Item\n3.Display Items\n4.Update\n5.Delete\n6.Search\n\n')
         let userChoice = parseInt(prompt());
         if(userChoice==1){
             console.log("exit")
@@ -108,6 +120,9 @@ function main() {
             case 5:
                 addressBookObj.deleteItemBasedOnName();
                 break;
+            case 6:
+                addressBookObj.searchItemBasedOnName();
+                break;    
             default:
                 console.log("Invalid input");
                 break;
