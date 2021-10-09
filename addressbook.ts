@@ -1,6 +1,6 @@
 import { writeDataToJsonfile, loadDataFromJsonFile, printAddressData,readInput, updateObject, prompt } from "./utils";
 
-class Person {
+interface personBase {
     firstName : string;
     lastName : string;
     emailId : string;
@@ -8,7 +8,21 @@ class Person {
     city :string;
     state : string;
     zipCode : number;
-    constructor(firstName:string, lastName:string, emailId:string, phoneNumber:number, city:string, state:string, zipCode:number) {
+}
+
+interface adressbookBase {
+    addNewItem(): void;
+    printItems(): void;
+    writeDataToFile(): void;
+    loadDataFromFile(): any;
+    updateDataBasedName(): void;
+    deleteItemBasedOnName(): void;
+    searchItemBasedOnName(): void;
+}
+
+class Person implements personBase{
+
+    constructor(public firstName:string, public lastName:string, public emailId:string, public phoneNumber:number, public city:string, public state:string, public zipCode:number) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
@@ -17,14 +31,15 @@ class Person {
         this.state = state;
         this.zipCode = zipCode;
     }
+    
 }
 
-class addressBookMain {
+class addressBookMain implements adressbookBase {
     public nameAddressMap = Object;
     constructor(){
         this.nameAddressMap = this.loadDataFromFile()
     }
-    public addNewItem(): void;
+    
     addNewItem() {
         let userData = readInput();
         let personObj = new Person(userData["firstName"], userData["lastName"], userData["emailId"], userData["phoneNumber"], userData["city"], userData["state"], userData["zipCode"]);
@@ -34,7 +49,7 @@ class addressBookMain {
         console.log('~~~~~~~~~~~')
         console.log(this.nameAddressMap);
     }
-    public printItems(): void;
+    
     printItems(){
         console.log('+++++++++++++++');
         console.log(this.nameAddressMap);
@@ -45,13 +60,11 @@ class addressBookMain {
         }
         console.log("\n------------------\n")
     }
-    
-    public writeDataToFile(): void;
+        
     writeDataToFile(){
         writeDataToJsonfile(this.nameAddressMap);
     }
-
-    public loadDataFromFile(): any;
+    
     loadDataFromFile(){
         let nameAddressMap = Object;
         let addressBookData = loadDataFromJsonFile();
@@ -64,7 +77,6 @@ class addressBookMain {
         return nameAddressMap;
     }
 
-    public deleteItemBasedOnName(): void;
     deleteItemBasedOnName(){
         console.log("Enter the name")
         let userName = prompt();
@@ -72,7 +84,6 @@ class addressBookMain {
         console.log('Deleted !!!')
     }
 
-    public updateDataBasedName(): void;
     updateDataBasedName(){
         console.log("Enter the name")
         let userName = prompt();
@@ -83,7 +94,6 @@ class addressBookMain {
         updateObject(userData, selectedUserObj['person'])
     }
 
-    public searchItemBasedOnName(): void;
     searchItemBasedOnName(){
         console.log("Enter the name")
         let userName = prompt();
@@ -91,7 +101,7 @@ class addressBookMain {
             let value = this.nameAddressMap[key];
             if(value.person.firstName == userName) {
                 console.log('Found person !!');
-                console.log(value.person);
+                console.log(value.person); 
             }
         }
     }
@@ -131,3 +141,8 @@ function main() {
 }
 main();
 export {};
+
+
+
+
+
